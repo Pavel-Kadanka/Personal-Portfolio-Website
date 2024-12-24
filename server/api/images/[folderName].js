@@ -2,13 +2,23 @@ import fs from 'fs';
 import path from 'path';
 
 export default defineEventHandler(async (event) => {
-    const { folderName } = event.context.params; // Get folder name from URL parameter
-    const imageDirectory = path.resolve('./public/projects/images', folderName); // Path to your image folder
-    const files = fs.readdirSync(imageDirectory);
+    try {
+        const { folderName } = event.context.params;
 
-    // Filter out non-image files (optional)
-    const imageFiles = files.filter(file => /\.(jpg|jpeg|png|gif|svg)$/i.test(file));
+        if (!folderName) {
+            throw createError({ statusCode: 400, message: "Folder name is required" });
+        }
 
-    // Return the list of image paths relative to the public directory
-    return imageFiles.map(file => `/projects/images/${folderName}/${file}`);
+        const imageDirectory = path.resolve('./public/projects/images', folderName);
+
+        // Safely read directory
+        const files = await fs.promises.readdir(imageDirectory);
+        const imageFiles = files.filter(file => /\.(jpg|jpeg|png|gif|svg)$/i.test(file));
+
+        return imageFiles.map(file => `/projects/images/${folderName}/${file}`);
+    } catch (error) {
+        console.error('Error handling API request:', error);
+        throw createError({ statusCode: 500, message: "Unable to process request" });
+    }
 });
+
