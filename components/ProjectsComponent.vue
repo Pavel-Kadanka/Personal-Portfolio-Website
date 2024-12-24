@@ -44,12 +44,18 @@ const fetchProjects = async () => {
         // Fetch images for each project folder
         for (const project of fetchedProjects) {
             const folderName = project.image; // Assuming project.image contains the folder name for images
+            if (!folderName) {
+                console.error(`Project ${project.id} has no valid image folder name.`);
+                projectImages.value[project.id] = [];
+                continue;
+            }
+
             try {
-                const images = await $fetch(`/api/images${folderName}`); // API call to fetch images for the folder
-                projectImages.value[project.id] = images; // Map the images to the project by id
+                const images = await $fetch(`/api/images/${folderName.replace(/^\/?/, '')}`);
+                projectImages.value[project.id] = images;
             } catch (error) {
-                console.error(`Error fetching images for ${folderName}:`, error);
-                projectImages.value[project.id] = []; // If no images found, set an empty array
+                console.error(`Error fetching images for folder "${folderName}":`, error.message);
+                projectImages.value[project.id] = [];
             }
         }
     } catch (error) {
