@@ -69,7 +69,7 @@ export default {
                 try {
                     // Fetch the images for the selected project
                     const folderName = projects.value[post.value].image; // Use the `image` property from project
-                    images.value = await $fetch(`/api/images/${folderName}`);
+                    images.value = await $fetch(`/api/images${folderName}`);
                 } catch (error) {
                     console.error('Error fetching images:', error);
                 }

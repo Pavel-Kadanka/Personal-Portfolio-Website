@@ -45,7 +45,7 @@ const fetchProjects = async () => {
         for (const project of fetchedProjects) {
             const folderName = project.image; // Assuming project.image contains the folder name for images
             try {
-                const images = await $fetch(`/api/images/${folderName}`); // API call to fetch images for the folder
+                const images = await $fetch(`/api/images${folderName}`); // API call to fetch images for the folder
                 projectImages.value[project.id] = images; // Map the images to the project by id
             } catch (error) {
                 console.error(`Error fetching images for ${folderName}:`, error);
