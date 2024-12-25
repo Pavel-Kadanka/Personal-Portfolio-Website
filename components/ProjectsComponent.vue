@@ -51,7 +51,7 @@ const fetchProjects = async () => {
             }
 
             try {
-                const images = await $fetch(`/api/images/${folderName.replace(/^\/?/, '')}`);
+                const images = await $fetch(`/server/api/images/${folderName.replace(/^\/?/, '')}`);
                 projectImages.value[project.id] = images;
             } catch (error) {
                 console.error(`Error fetching images for folder "${folderName}":`, error.message);
