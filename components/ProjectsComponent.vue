@@ -49,19 +49,19 @@ const fetchProjects = async () => {
                 continue;
             }
 
+            const sanitizedFolderName = folderName.replace(/^\/|\/$/g, '');
             try {
-                // Fetch images from the corresponding folder
-                const images = await $fetch(`/api/images/${encodeURIComponent(folderName)}`);
+                const images = await $fetch(`/api/images/${sanitizedFolderName}`);
                 projectImages.value[project.id] = images;
             } catch (error) {
                 console.error(`Error fetching images for folder "${folderName}":`, error.message);
                 projectImages.value[project.id] = [];
             }
-        }
-    } catch (error) {
-        console.error('Error fetching projects:', error);
-    }
-};
+                    }
+                } catch (error) {
+                    console.error('Error fetching projects:', error);
+                }
+            };
 
 onMounted(() => {
     fetchProjects();
