@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
             throw createError({ statusCode: 400, message: "Folder name is required" });
         }
 
-        const imageDirectory = path.resolve('../public/projects/images', folderName);
+        const imageDirectory = path.resolve('../public/projects/images', folderName); //test
 
         // Log resolved path and check directory existence
         console.log('Resolved directory path:', imageDirectory);
