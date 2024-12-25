@@ -3,6 +3,7 @@ import path from 'path';
 
 export default defineEventHandler(async (event) => {
     const { folderName } = event.context.params; // Extract the folder name from the URL
+    console.log('Received folderName:', folderName); // Debugging line
 
     try {
         // Resolve the directory path based on the folder name
