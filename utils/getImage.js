@@ -1,6 +1,8 @@
 export const getImage = async (folderName) => {
   try {
-    const response = await fetch(`/api/images/${folderName}`);
+    // Remove any leading or trailing slashes
+    const sanitizedFolder = folderName.replace(/^\/+|\/+$/g, '');
+    const response = await fetch(`/api/images?folder=${encodeURIComponent(sanitizedFolder)}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch images: ${response.statusText}`);
     }
