@@ -17,24 +17,44 @@ export default defineEventHandler((event) => {
   const sanitizedFolder = folder.replace(/^\/+|\/+$/g, '');
   
   try {
-    // Use process.cwd() to ensure we're using the correct base path
+    // Log the current working directory
+    console.log('CWD:', process.cwd());
+    
     const imageDirectory = path.join(process.cwd(), 'public', 'projects', 'images', sanitizedFolder);
+    
+    // Log the full path we're trying to access
+    console.log('Attempting to access:', imageDirectory);
+    
+    // Check if directory exists and log the result
+    const directoryExists = fs.existsSync(imageDirectory);
+    console.log('Directory exists:', directoryExists);
 
-    if (!fs.existsSync(imageDirectory)) {
+    if (!directoryExists) {
       throw createError({ 
-        statusCode: 404, 
-        statusMessage: `Directory "${sanitizedFolder}" not found` 
+        statusCode: 404,
+        statusMessage: `Directory not found: ${imageDirectory}` 
       });
     }
 
     const files = fs.readdirSync(imageDirectory);
+    console.log('Found files:', files);
+
     // Return URLs with correct path format
-    return files.map((file) => `/projects/images/${sanitizedFolder}/${file}`);
+    const imageUrls = files.map((file) => `/projects/images/${sanitizedFolder}/${file}`);
+    console.log('Returning URLs:', imageUrls);
+    
+    return imageUrls;
   } catch (error) {
-    console.error('Server error:', error); // Add logging for debugging
+    // Log the full error details
+    console.error('Detailed error:', {
+      message: error.message,
+      stack: error.stack,
+      code: error.code
+    });
+    
     throw createError({ 
       statusCode: 500, 
-      statusMessage: `Error processing request: ${error.message}` 
+      statusMessage: `Server error: ${error.message}` 
     });
   }
 }); 
