@@ -23,8 +23,6 @@ export default defineEventHandler((event) => {
     ],
     'takovi': [
       '/projects/images/takovi/image1.png',
-      '/projects/images/takovi/image2.png',
-      // Add all your takovi images
     ]
   };
 
