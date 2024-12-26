@@ -13,48 +13,29 @@ export default defineEventHandler((event) => {
     });
   }
 
-  // Remove any leading or trailing slashes
-  const sanitizedFolder = folder.replace(/^\/+|\/+$/g, '');
+  // Define your image mappings - you can move this to a separate config file
+  const imageMap = {
+    'portfolio': [
+      '/projects/images/portfolio/image1.png',
+      '/projects/images/portfolio/image2.png',
+      '/projects/images/portfolio/image3.png',
+      // Add all your portfolio images
+    ],
+    'takovi': [
+      '/projects/images/takovi/image1.png',
+      '/projects/images/takovi/image2.png',
+      // Add all your takovi images
+    ]
+  };
+
+  const images = imageMap[folder];
   
-  try {
-    // Log the current working directory
-    console.log('CWD:', process.cwd());
-    
-    const imageDirectory = path.join(process.cwd(), 'public', 'projects', 'images', sanitizedFolder);
-    
-    // Log the full path we're trying to access
-    console.log('Attempting to access:', imageDirectory);
-    
-    // Check if directory exists and log the result
-    const directoryExists = fs.existsSync(imageDirectory);
-    console.log('Directory exists:', directoryExists);
-
-    if (!directoryExists) {
-      throw createError({ 
-        statusCode: 404,
-        statusMessage: `Directory not found: ${imageDirectory}` 
-      });
-    }
-
-    const files = fs.readdirSync(imageDirectory);
-    console.log('Found files:', files);
-
-    // Return URLs with correct path format
-    const imageUrls = files.map((file) => `/projects/images/${sanitizedFolder}/${file}`);
-    console.log('Returning URLs:', imageUrls);
-    
-    return imageUrls;
-  } catch (error) {
-    // Log the full error details
-    console.error('Detailed error:', {
-      message: error.message,
-      stack: error.stack,
-      code: error.code
-    });
-    
-    throw createError({ 
-      statusCode: 500, 
-      statusMessage: `Server error: ${error.message}` 
+  if (!images) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: `No images found for folder: ${folder}`
     });
   }
+
+  return images;
 }); 
