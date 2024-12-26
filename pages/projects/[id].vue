@@ -60,40 +60,33 @@ export default {
         // Fetch projects and their images
         onMounted(async () => {
             try {
-                // Fetch the list of projects
-                const { data: fetchedProjects } = await useFetch('/api/projects');
-                projects.value = fetchedProjects.value;
-
-                if (post.value !== null) {
-                    // Fetch the selected project based on the post computed value
-                    const project = projects.value[post.value];
-
-                    // Fetch the images for the selected project using its image folder
-                    const folderName = project.image; // Get the image folder name from the project
-                    if (!folderName) {
-                        console.error(`Project ${project.id} has no valid image folder name.`);
-                        images.value = [];
-                        return;
-                    }
-
-                    try {
-                        // Fetch images for the project
-                        const { data } = await useFetch('/api/images', {
-                            query: { folder: folderName.replace(/^\/+|\/+$/g, '') } // Clean folder name to remove any extra slashes
-                        });
-
-                        // Store the fetched images
-                        images.value = data.value || [];
-
-                        // Fetch the project skills for the selected project
-                        project_skills.value = await $fetch(`/api/project_skills?project_id=${post.value + 1}`);
-                    } catch (error) {
-                        console.error(`Error fetching images for folder "${folderName}":`, error.message);
-                        images.value = [];
-                    }
-                }
+                projects.value = await $fetch('/api/projects');
             } catch (error) {
-                console.error('Error fetching projects:', error.message);
+                console.error('Error fetching projects:', error);
+            }
+
+            const project = projects.value[post.value]; // Get the selected project
+
+            if (project && project.image && post.value !== null) {
+                try {
+                    const folderName = project.image; // Assuming 'image' is a property on the project object
+                    const { data } = await useFetch('/api/images', {
+                        query: {
+                            folder: folderName.replace(/^\/+|\/+$/g, '') // Clean the folder path
+                        }
+                    });
+                    images.value = data.value || []; // Update the project with images
+                } catch (error) {
+                    console.error('Error fetching images:', error);
+                }
+
+                try {
+                    project_skills.value = await $fetch(`/api/project_skills?project_id=${post.value + 1}`);
+                } catch (error) {
+                    console.error('Error fetching project_skills:', error);
+                }
+            } else {
+                console.error('Invalid project or image not found');
             }
         });
 
