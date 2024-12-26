@@ -29,18 +29,17 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { getImage } from '~/utils/getImage';
 
 const projects = ref([]);
 const projectImages = ref({});
 
 const fetchProjects = async () => {
     try {
-        const fetchedProjects = await $fetch('/api/projects');
-        projects.value = fetchedProjects;
+        const { data: fetchedProjects } = await useFetch('/api/projects');
+        projects.value = fetchedProjects.value;
 
         // Fetch images for each project folder
-        for (const project of fetchedProjects) {
+        for (const project of fetchedProjects.value) {
             const folderName = project.image;
             if (!folderName) {
                 console.error(`Project ${project.id} has no valid image folder name.`);
@@ -49,14 +48,12 @@ const fetchProjects = async () => {
             }
 
             try {
-                // Remove sanitization if your backend expects the original folder name
-                const images = await getImage(folderName);
-                if (Array.isArray(images)) {
-                    projectImages.value[project.id] = images;
-                } else {
-                    console.error(`Invalid image data received for project ${project.id}`);
-                    projectImages.value[project.id] = [];
-                }
+                const { data } = await useFetch('/api/images', {
+                    query: {
+                        folder: folderName.replace(/^\/+|\/+$/g, '')
+                    }
+                });
+                projectImages.value[project.id] = data.value || [];
             } catch (error) {
                 console.error(`Error fetching images for folder "${folderName}":`, error.message);
                 projectImages.value[project.id] = [];
