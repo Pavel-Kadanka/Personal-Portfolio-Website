@@ -8,5 +8,5 @@ export const getImage = async (folderName) => {
   } catch (error) {
     console.error(`Error fetching images for folder "${folderName}":`, error.message);
     throw error;
-  }
+  } //test
 };
