@@ -29,39 +29,43 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { getImage } from '~/utils/getImage';
 
-const projects = ref([]); // Holds the project data
-const projectImages = ref({}); // Holds images for each project folder
+const projects = ref([]);
+const projectImages = ref({});
 
-// Fetch projects and their images
 const fetchProjects = async () => {
     try {
-        // Fetch the list of projects
         const fetchedProjects = await $fetch('/api/projects');
         projects.value = fetchedProjects;
 
         // Fetch images for each project folder
         for (const project of fetchedProjects) {
-            const folderName = project.image; // Assuming project.image contains the folder name for images
+            const folderName = project.image;
             if (!folderName) {
                 console.error(`Project ${project.id} has no valid image folder name.`);
                 projectImages.value[project.id] = [];
                 continue;
             }
 
-            const sanitizedFolderName = folderName.replace(/^\/|\/$/g, '');
             try {
-                const images = await $fetch(`/api/images/${sanitizedFolderName}`);
-                projectImages.value[project.id] = images;
+                // Remove sanitization if your backend expects the original folder name
+                const images = await getImage(folderName);
+                if (Array.isArray(images)) {
+                    projectImages.value[project.id] = images;
+                } else {
+                    console.error(`Invalid image data received for project ${project.id}`);
+                    projectImages.value[project.id] = [];
+                }
             } catch (error) {
                 console.error(`Error fetching images for folder "${folderName}":`, error.message);
                 projectImages.value[project.id] = [];
             }
-                    }
-                } catch (error) {
-                    console.error('Error fetching projects:', error);
-                }
-            };
+        }
+    } catch (error) {
+        console.error('Error fetching projects:', error.message);
+    }
+};
 
 onMounted(() => {
     fetchProjects();
