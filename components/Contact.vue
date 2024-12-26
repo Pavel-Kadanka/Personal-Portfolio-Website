@@ -7,7 +7,7 @@
             </v-icon>
         </v-btn>
 
-        <v-btn href="mailto:“pavel.kadanka@outlook.cz" @click="openPopup" :style="{ marginLeft: margin + 'px', marginRight: margin + 'px' }" height="60" width="60" variant="outlined" color="#FF81C1" class="hover">
+        <v-btn href="mailto:pavel.kadanka@outlook.cz" @click="openPopup" :style="{ marginLeft: margin + 'px', marginRight: margin + 'px' }" height="60" width="60" variant="outlined" color="#FF81C1" class="hover">
             <v-icon left>
                 <img src="/mail.png" alt="message" height="25">
             </v-icon>
