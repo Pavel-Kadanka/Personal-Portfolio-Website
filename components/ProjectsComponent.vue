@@ -2,18 +2,19 @@
     <v-container>
         <v-row>
             <v-col v-for="project in projects" :key="project.id" cols="12" md="6">
-                <a :href="'/projects/' + project.id">
                     <v-card variant="outlined" color="#FF81C1">
-                        <v-card-title class="text-h4 font-weight-bold">{{ project.title }}</v-card-title>
+                        <a :href="'/projects/' + project.id"><v-card-title class="text-h4 font-weight-bold">{{ project.title }}</v-card-title></a>
 
                         <!-- Carousel for Images -->
                         <v-carousel v-if="projectImages[project.id]?.length" height="250" class="pa-4">
-                            <v-carousel-item
+                            <a :href="'/projects/' + project.id">
+                                <v-carousel-item
                                 v-for="(img, index) in projectImages[project.id]"
                                 :key="index"
                                 :src="img"
                                 cover
                             ></v-carousel-item>
+                            </a>
                         </v-carousel>
 
                         <v-card-text class="truncate-text text-subtitle-1">{{ project.name }}</v-card-text>
@@ -21,7 +22,6 @@
                             <v-btn variant="outlined" :to="'/projects/' + project.id">More Info</v-btn>
                         </v-card-actions>
                     </v-card>
-                </a>
             </v-col>
         </v-row>
     </v-container>
