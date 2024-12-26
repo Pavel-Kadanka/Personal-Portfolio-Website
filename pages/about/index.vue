@@ -14,7 +14,7 @@
             </v-col>
             <v-col>
                 <p 
-                    class="text-subtitle-1 mt-2 pd-10"
+                    class="text-subtitle-1 mt-2 px-10"
                     :class="{'text-center' : isMobile}"
                 >
                     <span class="text-h4 font-weight-black">My name is Pavel</span><br><br>
