@@ -23,6 +23,7 @@ export default defineEventHandler((event) => {
     ],
     'takovi': [
       '/projects/images/takovi/image1.png',
+      //xd
     ]
   };
 
