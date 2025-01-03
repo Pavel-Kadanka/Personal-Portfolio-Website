@@ -13,7 +13,7 @@
 
 
 <script>
-import { useDisplay } from 'vuetify';
+import { useDisplay } from 'vuetify';    //footer update
 import Contact from './Contact.vue';
 
 export default {
