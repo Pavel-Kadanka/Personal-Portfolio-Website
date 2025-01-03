@@ -2,10 +2,12 @@
   <NuxtLayout>
     <Menu />
     <NuxtPage />
-    <Contact />
+    <Footer />
   </NuxtLayout>
 </template>
 <script>
+import Footer from './components/Footer.vue';
+
 
 </script>
 <style>
