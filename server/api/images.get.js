@@ -24,6 +24,16 @@ export default defineEventHandler((event) => {
     'takovi': [
       '/projects/images/takovi/image1.png',
       //xd
+    ],
+    'techpetal': [
+      '/projects/images/techpetal/image1.png',
+      '/projects/images/techpetal/image2.png',
+      '/projects/images/techpetal/image3.png',
+      '/projects/images/techpetal/image4.png',
+      '/projects/images/techpetal/image5.png',
+      '/projects/images/techpetal/image6.png',
+      '/projects/images/techpetal/image7.png',
+      '/projects/images/techpetal/image8.png',
     ]
   };
 
