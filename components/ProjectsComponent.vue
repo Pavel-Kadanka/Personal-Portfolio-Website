@@ -1,14 +1,6 @@
 <template>
   <v-container>
     <v-row>
-      <!-- Skeleton Loader while loading -->
-      <v-skeleton-loader
-        v-if="loading"
-        type="card"
-        class="ma-4"
-        :loading="loading"
-      ></v-skeleton-loader>
-
       <!-- Display Projects -->
       <v-col
         v-for="project in sortedProjects"
