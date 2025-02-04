@@ -1,75 +1,58 @@
-# Nuxt Minimal Starter
+# portfolio
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This is my personal portfolio I showcase my skills
 
-## Setup
+## 🚀 Features
+- **Nuxt 3 & Vuetify**: A powerful combination for a responsive and dynamic UI.
+- **Node.js Backend**: Robust backend logic for handling application requests.
+- **MySQL Database**: Efficient data storage and retrieval.
+- **SCSS**: Ensuring a modern and flexible design system.
 
-Make sure to install dependencies:
+## 📦 Installation
 
-```bash
-# npm
-npm install
+To set up TechPetal locally, follow these steps:
 
-# pnpm
-pnpm install
+1. **Clone the Repository:**
+   ```sh
+   git clone https://github.com/Pavel-Kadanka/portfolio.git
+   cd portfolio
+   ```
 
-# yarn
-yarn install
+2. **Install Dependencies:**
+   ```sh
+   npm install
+   ```
 
-# bun
-bun install
+3. **Setup Environment Variables:**
+   - Create a `.env` file in the root directory and add necessary configurations (e.g., database credentials, authentication secrets).
+
+4. **Run the Development Server:**
+   ```sh
+   npm run dev
+   ```
+
+## 🔧 Configuration
+Ensure you configure the `.env` file properly with:
+```env
+DB_URI=your_mysql_uri
 ```
 
-## Development Server
+## 📌 Usage
+- Access the application via `http://localhost:3000` (or configured port).
+- Login or create an account to explore its features.
+- Manage tasks, events, and schedules with the integrated calendar system.
 
-Start the development server on `http://localhost:3000`:
+## 🛠 Tech Stack
+- **Frontend:** Nuxt 3, Vuetify, SCSS
+- **Backend:** Node.js
+- **Database:** MySQL
 
-```bash
-# npm
-npm run dev
+## 🤝 Contributing
+Contributions are welcome! Feel free to fork this repository, make improvements, and submit a pull request.
 
-# pnpm
-pnpm dev
+## 📜 License
+This project is licensed under the [MIT License](LICENSE).
 
-# yarn
-yarn dev
+## 📬 Contact
+For any questions or feedback, feel free to reach out via GitHub Issues.
 
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
