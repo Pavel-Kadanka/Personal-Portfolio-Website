@@ -1,4 +1,4 @@
-# portfolio
+# Personal-Portfolio-Website
 
 This is my personal portfolio I showcase my skills
 
