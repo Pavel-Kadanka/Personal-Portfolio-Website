@@ -87,6 +87,13 @@ export default {
           date: '2024-Present',
           text: 'Joined Algorithmics as an online programming teacher.',
         },
+        {
+          color: '#FF81C1',
+          icon: 'mdi-web',
+          title: 'TechPetal Launch',
+          date: '2025',
+          text: 'Launch of the TechPetal blog',
+        },
       ].sort((a, b) => {
         const getDateValue = (date) => {
           // Extract the numeric part for sorting
