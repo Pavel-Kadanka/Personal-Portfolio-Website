@@ -33,61 +33,68 @@ export default {
       items: [
         {
           color: '#FF81C1',
-          icon: 'mdi-lightbulb-on', // Represents starting or learning something new
+          icon: 'mdi-lightbulb-on',
           title: 'Start of My Journey',
           date: '2020',
           text: 'This year marked the beginning of my programming journey as I started learning basic concepts and foundational skills.',
         },
         {
           color: '#FF81C1',
-          icon: 'mdi-school', // Represents education or school
+          icon: 'mdi-school',
           title: 'IT High School Brno',
           date: '2021-2026',
           text: 'In 2021, I enrolled in the IT High School of Technology and Economics in Brno, Olomoucká, where I continue to study.',
         },
         {
           color: '#FF81C1',
-          icon: 'mdi-publish', // Represents blogging or writing
+          icon: 'mdi-publish',
           title: 'Takovi',
           date: '2021',
           text: 'Launched my first major project, "Takovi," a blog dedicated to electronics.',
         },
         {
           color: '#FF81C1',
-          icon: 'mdi-rocket', // Represents growth or exploration
+          icon: 'mdi-rocket',
           title: 'Year of Growth',
           date: '2022',
           text: 'Spent 2022 focusing on learning new skills and broadening my knowledge.',
         },
         {
           color: '#FF81C1',
-          icon: 'mdi-briefcase', // Represents work or a job
+          icon: 'mdi-briefcase',
           title: 'Via Aurea',
           date: '2023-Present',
           text: 'Started my first job as a junior web developer at Via Aurea.',
         },
         {
           color: '#FF81C1',
-          icon: 'mdi-certificate', // Represents certification
+          icon: 'mdi-certificate',
           title: 'IT Essentials Cisco Certificate',
           date: '2024',
           text: 'Successfully completed the IT Essentials course from Cisco.',
         },
         {
           color: '#FF81C1',
-          icon: 'mdi-web', // Represents website development or online presence
+          icon: 'mdi-web',
           title: 'Portfolio Launch',
           date: '2024',
           text: 'Designed and published the first version of my portfolio website.',
         },
         {
           color: '#FF81C1',
-          icon: 'mdi-teach', // Represents teaching or education
+          icon: 'mdi-teach',
           title: 'Algorithmics',
           date: '2024-Present',
           text: 'Joined Algorithmics as an online programming teacher.',
         },
-      ],
+      ].sort((a, b) => {
+        const getDateValue = (date) => {
+          // Extract the numeric part for sorting
+          const match = date.match(/\d{4}/);
+          return match ? parseInt(match[0]) : 0;
+        };
+        return getDateValue(b.date) - getDateValue(a.date);
+      }),
     };
   },
   methods: {
