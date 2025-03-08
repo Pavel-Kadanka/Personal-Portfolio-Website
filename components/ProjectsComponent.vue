@@ -1,43 +1,79 @@
 <template>
   <v-container>
+    <h2 class="text-center text-h4 mb-12 animate-title">My Projects</h2>
     <v-row>
-      <!-- Display Projects -->
-      <v-col
-        v-for="project in sortedProjects"
-        :key="project.id"
-        cols="12"
-        md="6"
-      >
-        <v-card variant="outlined" color="#FF81C1">
-          <a :href="'/projects/' + project.id">
-            <v-card-title class="text-h4 font-weight-bold">
-              {{ project.title }}
-            </v-card-title>
-          </a>
-
-          <!-- Carousel for Images -->
-          <v-carousel
-            v-if="projectImages[project.id]?.length"
-            height="250"
-            class="pa-4"
-          >
-            <a :href="'/projects/' + project.id">
+      <v-col v-for="(project, index) in sortedProjects"
+             :key="project.id"
+             cols="12"
+             md="6"
+             class="project-col">
+        <v-card
+          class="project-card"
+          :style="{ animationDelay: `${index * 0.2}s` }"
+          variant="outlined"
+          @mouseover="hoveredProject = project.id"
+          @mouseleave="hoveredProject = null"
+        >
+          <div class="project-image-wrapper">
+            <v-carousel
+              v-if="projectImages[project.id]?.length"
+              height="300"
+              hide-delimiters
+              :show-arrows="hoveredProject === project.id"
+              class="project-carousel"
+            >
               <v-carousel-item
                 v-for="(img, index) in projectImages[project.id]"
                 :key="index"
                 :src="img"
                 cover
-              ></v-carousel-item>
-            </a>
-          </v-carousel>
+              >
+                <div class="image-overlay" v-if="hoveredProject === project.id">
+                  <v-btn
+                    variant="outlined"
+                    color="white"
+                    class="view-project-btn"
+                    :to="'/projects/' + project.id"
+                  >
+                    View Project
+                    <v-icon end icon="mdi-arrow-right" class="ml-2"></v-icon>
+                  </v-btn>
+                </div>
+              </v-carousel-item>
+            </v-carousel>
+          </div>
 
-          <v-card-text class="truncate-text text-subtitle-1">
-            {{ project.name }}
+          <v-card-title class="project-title pa-4">
+            <div class="d-flex align-center justify-space-between">
+              <h3 class="text-h5 font-weight-medium">{{ project.title }}</h3>
+              <v-chip
+                color="#FF81C1"
+                size="small"
+                class="project-status"
+              >
+                {{ project.status || 'Completed' }}
+              </v-chip>
+            </div>
+          </v-card-title>
+
+          <v-card-text class="project-description pa-4 pt-0">
+            {{ truncateText(project.name, 150) }}
           </v-card-text>
+
+          <v-divider></v-divider>
+
           <v-card-actions class="pa-4">
-            <v-btn variant="outlined" :to="'/projects/' + project.id">
-              More Info
-            </v-btn>
+            <v-chip-group>
+              <v-chip
+                v-for="tech in (project.technologies || ['Vue.js', 'Nuxt'])"
+                :key="tech"
+                size="small"
+                variant="outlined"
+                class="tech-chip "
+              >
+                {{ tech }}
+              </v-chip>
+            </v-chip-group>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -51,6 +87,18 @@ import { ref, computed, onMounted } from 'vue';
 const projects = ref([]);
 const projectImages = ref({});
 const loading = ref(true);
+const hoveredProject = ref(null);
+
+const truncateText = (text, maxLength) => {
+  if (!text) return '';
+  if (text.length <= maxLength) return text;
+  
+  // Find the last space within the maxLength to avoid cutting words
+  const truncated = text.substr(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+  
+  return truncated.substr(0, lastSpace) + '...';
+};
 
 const fetchProjects = async () => {
   try {
@@ -96,17 +144,5 @@ onMounted(() => {
 </script>
 
 <style>
-@import url(assets/css/styles.css);
-
-.truncate-text {
-  max-height: 5.5em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-}
-
-a {
-  text-decoration: none;
-}
+@import '@/assets/css/components/projects.css';
 </style>

@@ -1,0 +1,49 @@
+/* Typography styles */
+.text-h2 {
+  font-family: 'Joti One', sans-serif;
+  color: var(--text-color);
+}
+
+.text-h3 {
+  font-family: 'Irish Grover', sans-serif;
+  color: var(--primary-color);
+}
+
+.text-h4 {
+  font-family: 'Joti One', sans-serif;
+  color: var(--text-color);
+}
+
+.text-h5 {
+  font-family: 'Irish Grover', sans-serif;
+  color: var(--primary-color);
+}
+
+.text-h6 {
+  font-family: 'Irish Grover', sans-serif;
+  color: var(--primary-color);
+}
+
+.text-body-1 {
+  color: var(--text-color);
+}
+
+.text-body-2 {
+    color: var(--text-color);
+  }
+
+.text-subtitle-1 {
+  font-family: 'Kode Mono', sans-serif;
+  color: var(--text-color);
+}
+
+.special-font {
+  font-family: 'Joti One', sans-serif;
+}
+
+.gradient-text {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+} 

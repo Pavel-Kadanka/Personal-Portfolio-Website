@@ -1,0 +1,40 @@
+.bio-section-wrapper {
+    display: flex;
+    gap: 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 100vh;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.timeline-side {
+    flex: 1;
+    max-width: 25%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.skills-side {
+    flex: 3;
+    max-width: 75%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+@media (max-width: 960px) {
+    .bio-section-wrapper {
+        height: auto;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .timeline-side,
+    .skills-side {
+        max-width: 100%;
+        height: auto;
+    }
+} 

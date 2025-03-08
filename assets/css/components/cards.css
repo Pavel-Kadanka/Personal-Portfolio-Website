@@ -1,0 +1,33 @@
+.text-card {
+    background: rgba(255, 129, 193, 0.05);
+    border: 1px solid rgba(255, 129, 193, 0.1);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.text-card:hover {
+    background: rgba(255, 129, 193, 0.08);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.project-card {
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.skill-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+} 

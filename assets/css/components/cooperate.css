@@ -1,0 +1,15 @@
+.contact-section {
+  position: relative;
+  padding: var(--spacing-xl) 0;
+  overflow: hidden;
+}
+
+.contact-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xl);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ... rest of Cooperate styles ... */ 

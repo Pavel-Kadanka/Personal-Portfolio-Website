@@ -3,9 +3,81 @@
     <Loading v-if="isLoading" />
 
     <!-- Main content when loading is complete -->
-    <div v-else>
-        <LandingComponent />
-        <Cooperate id="cooperate"/>
+    <div v-else class="landing-container">
+        <!-- Navigation -->
+        <nav class="navigation" :class="{ 'nav-scrolled': hasScrolled }">
+            <div class="nav-content">
+                <span class="logo gradient-text">Pavel</span>
+                <div class="nav-links" v-if="!isMobile">
+                    <a v-for="(section, index) in sections" 
+                       :key="index" 
+                       @click="scrollToSection(section.id)"
+                       :class="{ 'active': activeSection === section.id }"
+                    >
+                        {{ section.name }}
+                    </a>
+                </div>
+                <v-app-bar-nav-icon v-else @click="drawer = !drawer"></v-app-bar-nav-icon>
+            </div>
+        </nav>
+
+        <!-- Mobile Navigation Drawer -->
+        <v-navigation-drawer v-model="drawer" location="right" temporary v-if="isMobile">
+            <v-list>
+                <v-list-item v-for="(section, index) in sections" 
+                            :key="index"
+                            @click="scrollToSection(section.id)">
+                    {{ section.name }}
+                </v-list-item>
+            </v-list>
+        </v-navigation-drawer>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="hero-content-wrapper">
+                <!-- Left side - Text content -->
+                <div class="hero-content" :class="{ 'mobile-hero': isMobile }">
+                    <h1 class="text-h2 animate-text">
+                        <span class="gradient-text">Hello, I'm Pavel</span>
+                    </h1>
+                    <h2 class="text-h4 mt-4 animate-text-delay">
+                        Web Developer & Designer
+                    </h2>
+                    <p class="text-subtitle-1 mt-6 animate-text-delay-2">
+                        Crafting digital experiences with passion and precision
+                    </p>
+                    <v-btn
+                        class="mt-6 animate-button"
+                        color="#f08bedfa"
+                        size="large"
+                        @click="scrollToSection('projects')"
+                    >
+                        View My Work
+                        <v-icon class="ml-2">mdi-arrow-right</v-icon>
+                    </v-btn>
+                </div>
+                
+                <!-- Right side - Image -->
+                <div class="hero-image animate-image">
+                    <img src="/me-hands-crossed.png" alt="Pavel" />
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section fade-in-section">
+            <Bio />
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section fade-in-section">
+            <ProjectsComponent />
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section fade-in-section">
+            <Cooperate />
+        </section>
     </div>
 </template>
 
@@ -14,37 +86,106 @@ import { useDisplay } from "vuetify";
 
 export default {
     setup() {
-        const display = useDisplay(); // Access reactive display values
+        const display = useDisplay();
         return {
-            display, // Make the display object available in the template or logic
+            display,
         };
     },
     data() {
         return {
-            isMobile: false, // Initialize `isMobile`
-            isLoading: true, // State to control loading animation
+            isMobile: false,
+            isLoading: true,
+            assetsLoaded: false,
+            componentsLoaded: false,
+            drawer: false,
+            hasScrolled: false,
+            activeSection: 'home',
+            sections: [
+                { id: 'home', name: 'Home' },
+                { id: 'about', name: 'About' },
+                { id: 'projects', name: 'Projects' },
+                { id: 'contact', name: 'Contact' }
+            ]
         };
     },
     methods: {
         updateLayout() {
-            // Use reactive display properties for layout updates
             this.isMobile = this.display.smAndDown;
         },
-        finishLoading() {
-            // Simulate some loading delay and finish
-            setTimeout(() => {
-                this.isLoading = false; // Stop loading
-            }, 1500); // Simulated delay
+        scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+            if (this.isMobile) {
+                this.drawer = false;
+            }
+        },
+        handleScroll() {
+            const sections = document.querySelectorAll('.fade-in-section');
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (sectionTop < windowHeight * 0.75) {
+                    section.classList.add('is-visible');
+                }
+            });
+
+            this.hasScrolled = window.scrollY > 50;
+
+            this.sections.forEach(({ id }) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    if (rect.top <= 100 && rect.bottom >= 100) {
+                        this.activeSection = id;
+                    }
+                }
+            });
+        },
+        checkLoadingStatus() {
+            this.isLoading = !(this.assetsLoaded && this.componentsLoaded);
+        },
+        async loadAssets() {
+            const imagePromises = [
+                this.preloadImage('/me-hands-crossed.png'),
+            ];
+
+            try {
+                await Promise.all(imagePromises);
+                this.assetsLoaded = true;
+                this.checkLoadingStatus();
+            } catch (error) {
+                console.error('Error loading assets:', error);
+            }
+        },
+        preloadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve();
+                img.onerror = () => reject();
+                img.src = src;
+            });
         }
     },
-    mounted() {
-        this.updateLayout(); // Check layout on mount
-        window.addEventListener("resize", this.updateLayout); // Update on resize
+    async mounted() {
+        this.updateLayout();
+        window.addEventListener("resize", this.updateLayout);
+        window.addEventListener('scroll', this.handleScroll);
 
-        this.finishLoading(); // Simulate loading process on mount
+        this.loadAssets();
+
+        this.$nextTick(() => {
+            this.componentsLoaded = true;
+            this.checkLoadingStatus();
+        });
+
+        this.handleScroll();
     },
     beforeDestroy() {
+        window.removeEventListener("resize", this.updateLayout);
         window.removeEventListener("resize", this.updateLayout); // Clean up event listener
+        window.removeEventListener('scroll', this.handleScroll);
     },
 };
 </script>
@@ -52,10 +193,162 @@ export default {
 <style>
 @import url(assets/css/styles.css);
 
-.main-color {
-    color: white;
+.landing-container {
+    background-color: rgb(15, 15, 17);
+    min-height: 100vh;
 }
 
+.navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 1rem 17vw;
+    transition: all 0.3s ease;
+}
+
+.nav-scrolled {
+    background-color: rgba(15, 15, 17, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Joti One', sans-serif;
+    font-size: 1.5rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: #f08bedfa;
+}
+
+.section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media (max-width: 960px) {
+    .navigation {
+        padding: 1rem 5vw;
+    }
+    .section {
+        padding: 80px 5vw;
+    }
+}
+
+.hero-section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 5vw;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 4rem;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 600px;
+}
+
+.hero-image {
+    flex: 1;
+    max-width: 500px;
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(240, 139, 237, 0.2);
+}
+
+.animate-image {
+    animation: fadeInRight 0.8s ease forwards 1.2s;
+}
+
+@keyframes fadeInRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.mobile-hero {
+    text-align: center;
+    padding: 0 20px;
+}
+
+.gradient-text {
+    background: linear-gradient(45deg, #f08bedfa, #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.animate-text {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.animate-text-delay {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards 0.3s;
+}
+
+.animate-text-delay-2 {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards 0.6s;
+}
+
+.animate-button {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards 0.9s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Keep your existing fade-in-section styles */
 .fade-in-section {
     opacity: 0;
     transform: translateY(20vh);
@@ -68,5 +361,23 @@ export default {
     opacity: 1;
     transform: none;
     visibility: visible;
+}
+
+@media (max-width: 960px) {
+    .hero-content-wrapper {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .hero-image {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .mobile-hero {
+        text-align: center;
+        padding: 0 20px;
+    }
 }
 </style>
