@@ -1,11 +1,12 @@
 <template>
-  <v-container>
-    <h2 class="text-center text-h4 mb-12 animate-title">My Projects</h2>
+  <v-container class="px-4">
+    <h2 class="text-center text-h4 mb-8 mb-md-12 animate-title">My Projects</h2>
     <v-row>
       <v-col v-for="(project, index) in sortedProjects"
              :key="project.id"
              cols="12"
-             md="6"
+             sm="6"
+             lg="4"
              class="project-col">
         <v-card
           class="project-card"
@@ -57,7 +58,7 @@
           </v-card-title>
 
           <v-card-text class="project-description pa-4 pt-0">
-            {{ truncateText(project.name, 150) }}
+            {{ truncateText(project.description || project.name || '', 150) }}
           </v-card-text>
 
           <v-divider></v-divider>
@@ -65,13 +66,13 @@
           <v-card-actions class="pa-4">
             <v-chip-group>
               <v-chip
-                v-for="tech in (project.technologies || ['Vue.js', 'Nuxt'])"
-                :key="tech"
+                v-for="skill in project_skills[project.id]"
+                :key="skill.name"
                 size="small"
                 variant="outlined"
-                class="tech-chip "
+                class="tech-chip"
               >
-                {{ tech }}
+                {{ skill.name }}
               </v-chip>
             </v-chip-group>
           </v-card-actions>
@@ -86,26 +87,51 @@ import { ref, computed, onMounted } from 'vue';
 
 const projects = ref([]);
 const projectImages = ref({});
+const project_skills = ref({});
 const loading = ref(true);
 const hoveredProject = ref(null);
 
 const truncateText = (text, maxLength) => {
+  console.log('Input text:', text);
+  console.log('Text length:', text?.length);
+
   if (!text) return '';
   if (text.length <= maxLength) return text;
   
-  // Find the last space within the maxLength to avoid cutting words
-  const truncated = text.substr(0, maxLength);
+  const truncated = text.substring(0, maxLength);
   const lastSpace = truncated.lastIndexOf(' ');
   
-  return truncated.substr(0, lastSpace) + '...';
+  if (lastSpace === -1) {
+    return truncated + '...';
+  }
+  
+  return truncated.substring(0, lastSpace) + '...';
 };
 
 const fetchProjects = async () => {
   try {
     const { data: fetchedProjects } = await useFetch('/api/projects');
-    projects.value = fetchedProjects.value;
+    console.log('Fetched projects:', fetchedProjects.value);
+    
+    if (fetchedProjects.value) {
+      projects.value = fetchedProjects.value.map(project => ({
+        ...project,
+        description: project.description || project.name || ''
+      }));
 
-    // Fetch images for each project folder
+      // Fetch skills for each project
+      for (const project of fetchedProjects.value) {
+        try {
+          const skills = await $fetch(`/api/project_skills?project_id=${project.id}`);
+          project_skills.value[project.id] = skills;
+        } catch (error) {
+          console.error(`Error fetching skills for project ${project.id}:`, error);
+          project_skills.value[project.id] = [];
+        }
+      }
+    }
+
+    // Fetch images for each project
     for (const project of fetchedProjects.value) {
       const folderName = project.image;
       if (!folderName) {
@@ -127,9 +153,9 @@ const fetchProjects = async () => {
       }
     }
   } catch (error) {
-    console.error('Error fetching projects:', error.message);
+    console.error('Error fetching projects:', error);
   } finally {
-    loading.value = false; // Stop the skeleton loader
+    loading.value = false;
   }
 };
 

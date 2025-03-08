@@ -25,12 +25,15 @@ export default defineEventHandler(async (event) => {
 
         // Filter out skills with null values
         const skills = [
-            { name: '.html', percentage: skillRow.html },
-            { name: '.css', percentage: skillRow.css },
-            { name: '.ts', percentage: skillRow.typescript },
-            { name: '.js', percentage: skillRow.nuxt },
-            { name: '.php', percentage: skillRow.php },
-            { name: '.py', percentage: skillRow.laravel },
+            { name: 'HTML', percentage: skillRow.html },
+            { name: 'CSS', percentage: skillRow.css },
+            { name: 'TypeScript', percentage: skillRow.typescript },
+            { name: 'JavaScript', percentage: skillRow.javascript },
+            { name: 'PHP', percentage: skillRow.php },
+            { name: 'Laravel', percentage: skillRow.laravel },
+            { name: 'Vue.js', percentage: skillRow.vue },
+            { name: 'Nuxt', percentage: skillRow.nuxt },
+            { name: 'Python', percentage: skillRow.python },
         ].filter(skill => skill.percentage !== null); // Filter out null values
 
         // Return the array of skills as JSON
