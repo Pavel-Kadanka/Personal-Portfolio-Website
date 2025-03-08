@@ -33,7 +33,7 @@
                             color="#FF81C1"
                             size="large"
                             class="contact-btn"
-                            href="https://linkedin.com/in/yourprofile"
+                            href="https://www.linkedin.com/in/pavel-kada%C5%88ka-48a34b296/"
                             target="_blank"
                         >
                             LinkedIn
