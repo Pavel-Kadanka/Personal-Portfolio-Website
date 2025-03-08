@@ -1,5 +1,6 @@
 <template>
-    <!-- Show Loading Component if loading -->
+    <v-app>
+        <!-- Show Loading Component if loading -->
     <Loading v-if="isLoading" />
 
     <!-- Main content when loading is complete -->
@@ -8,6 +9,8 @@
         <nav class="navigation" :class="{ 'nav-scrolled': hasScrolled }">
             <div class="nav-content">
                 <span class="logo gradient-text">Pavel</span>
+
+                <!-- Desktop Navigation -->
                 <div class="nav-links" v-if="!isMobile">
                     <a v-for="(section, index) in sections" 
                        :key="index" 
@@ -17,17 +20,32 @@
                         {{ section.name }}
                     </a>
                 </div>
-                <v-app-bar-nav-icon v-else @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+                <!-- Mobile Menu Icon -->
+                <v-app-bar-nav-icon class="drawer" v-else @click="drawer = !drawer"></v-app-bar-nav-icon>
             </div>
         </nav>
 
         <!-- Mobile Navigation Drawer -->
-        <v-navigation-drawer v-model="drawer" location="right" temporary v-if="isMobile">
-            <v-list>
+        <v-navigation-drawer v-model="drawer" location="right" temporary>
+            <v-list class="drawer-list">
+                <!-- Add close button header -->
+                <v-list-item class="drawer-header">
+                    <div class="d-flex justify-space-between align-center w-100">
+                        <span class="gradient-text text-h6">Menu</span>
+                        <v-btn icon="mdi-close" variant="text" @click="drawer = false" color="#f08bedfa"></v-btn>
+                    </div>
+                </v-list-item>
+                
+                <v-divider class="my-2"></v-divider>
+
                 <v-list-item v-for="(section, index) in sections" 
                             :key="index"
-                            @click="scrollToSection(section.id)">
-                    {{ section.name }}
+                            @click="scrollToSection(section.id)"
+                            class="drawer-items">
+                    <span>
+                        {{ section.name }}
+                    </span>
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
@@ -79,12 +97,21 @@
             <Cooperate />
         </section>
     </div>
+    </v-app>
 </template>
 
 <script>
 import { useDisplay } from "vuetify";
+import Bio from '@/components/Bio.vue';
+import ProjectsComponent from '@/components/ProjectsComponent.vue';
+import Cooperate from '@/components/Cooperate.vue';
 
 export default {
+    components: {
+        Bio,
+        ProjectsComponent,
+        Cooperate
+    },
     setup() {
         const display = useDisplay();
         return {
@@ -192,6 +219,14 @@ export default {
 
 <style>
 @import url(assets/css/styles.css);
+
+.drawer {
+    color: #f08bedfa;
+}
+
+.drawer-items span {
+    color: white;
+}
 
 .landing-container {
     background-color: rgb(15, 15, 17);
@@ -367,7 +402,7 @@ export default {
 
 @media (max-width: 1440px) {
     .hero-section {
-        padding: 0 10vw;
+        padding: 0 5vw;
     }
     
     .hero-image {
@@ -429,5 +464,46 @@ export default {
     .hero-image {
         max-width: 200px;
     }
+}
+
+/* Navigation Drawer Styles */
+.v-navigation-drawer {
+    background-color: rgb(15, 15, 17) !important;
+}
+
+.drawer-list {
+    background-color: rgb(15, 15, 17) !important;
+    color: white !important;
+}
+
+.drawer-items {
+    color: white !important;
+    transition: all 0.3s ease;
+}
+
+.drawer-items:hover {
+    background-color: rgba(240, 139, 237, 0.1) !important;
+}
+
+.drawer-items span {
+    color: white !important;
+}
+
+/* Optional: Style the scrim (overlay) when drawer is open */
+.v-overlay__scrim {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Navigation Drawer Styles */
+.drawer-header {
+    padding: 16px !important;
+}
+
+.drawer-header .v-btn {
+    margin-right: -8px;
+}
+
+.v-divider {
+    border-color: rgba(255, 255, 255, 0.12) !important;
 }
 </style>
