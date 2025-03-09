@@ -130,7 +130,7 @@ export default {
         {
           name: 'Vue Ecosystem',
           percentage: 80,
-          tags: ['Vue 3', 'Nuxt 3']
+          tags: ['Vue 3', 'Nuxt 3', 'Vuetify']
         },
         {
           name: 'Backend',
