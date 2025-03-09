@@ -59,7 +59,7 @@
                         <span class="gradient-text">Hello, I'm Pavel</span>
                     </h1>
                     <h2 class="text-h4 mt-4 animate-text-delay">
-                        Web Developer & Designer
+                        Web Developer & Programmer
                     </h2>
                     <p class="text-subtitle-1 mt-6 animate-text-delay-2">
                         Crafting digital experiences with passion and precision
