@@ -5,7 +5,7 @@
     <v-container v-else class="project-detail">
         <!-- Back button -->
         <v-row>
-            <v-col cols="12" class="pa-0">
+            <v-col cols="12" class="px-4">
                 <v-btn
                     @click="goBack"
                     variant="outlined"
