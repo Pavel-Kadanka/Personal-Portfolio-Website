@@ -1,6 +1,6 @@
 .bio-section-wrapper {
+    gap: 2rem;
     display: flex;
-    gap: 4rem;
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 2rem;
@@ -11,18 +11,19 @@
 
 .timeline-side {
     flex: 1;
-    max-width: 25%;
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
 }
 
 .skills-side {
     flex: 3;
-    max-width: 75%;
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
+
 }
 
 @media (max-width: 960px) {

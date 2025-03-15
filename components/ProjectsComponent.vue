@@ -1,5 +1,5 @@
 <template>
-  <v-container class="px-4">
+  <v-container class="px-8">
     <h2 class="text-center text-h4 mb-8 mb-md-12 animate-title">My Projects</h2>
     <v-row>
       <v-col v-for="(project, index) in sortedProjects"

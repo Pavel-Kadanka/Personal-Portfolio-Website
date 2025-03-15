@@ -7,6 +7,9 @@
 @import './components/buttons.css';
 @import './components/cards.css';
 @import './components/navigation.css';
+@import './components/cooperate.css';
+@import './components/bio.css';
+@import './components/hero.css';
 
 /* Layouts */
 @import './layouts/grid.css';
@@ -49,50 +52,4 @@
 
 .hover-effect:hover {
   transform: translateY(-10px) rotate(2deg);
-}
-
-.text-card p {
-  color: var(--text-color);
-  font-size: 1.25rem;
-  line-height: 1.6;
-  margin: 0;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.text-h2 {
-  font-family: 'Joti One', sans-serif;
-  color: white;
-}
-
-.text-h3 {
-  font-family: 'Irish Grover', sans-serif;
-  color: #f08bedfa;
-}
-
-.text-h4 {
-  font-family: 'Joti One', sans-serif;
-  color: white;
-}
-
-.text-h5 {
-  font-family: 'Irish Grover', sans-serif;
-  color: #f08bedfa;
-}
-
-.text-body-1 {
-  color: white;
-}
-
-.text-h6 {
-  font-family: 'Irish Grover', sans-serif;
-  color: #f08bedfa;
-}
-
-.text-subtitle-1 {
-  font-family: 'Kode Mono', sans-serif;
-  color: white;
-}
-
-.special-font {
-  font-family: 'Joti One', sans-serif;
 }

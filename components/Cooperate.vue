@@ -48,9 +48,10 @@
                     <div class="image-background"></div>
                     <v-img
                         src="/me-pointing.png"
-                        width="400"
+                        :width="isMobile ? '300' : '400'"
                         class="pointing-image"
                         :class="{ 'hover-effect': !isMobile }"
+                        contain
                     ></v-img>
                 </div>
             </div>
@@ -97,7 +98,3 @@ export default {
     },
 };
 </script>
-
-<style>
-@import '@/assets/css/components/cooperate.css';
-</style>

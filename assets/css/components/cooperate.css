@@ -1,20 +1,20 @@
 .contact-section {
   position: relative;
-  padding: var(--spacing-xl) 5vw;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 5vw, 3rem);
   overflow: hidden;
 }
 
 .contact-wrapper {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xl);
+  gap: clamp(2rem, 4vw, 4rem);
   max-width: 1400px;
   margin: 0 auto;
 }
 
 .content-side {
   flex: 1;
-  padding-right: 2rem;
+  padding-right: clamp(1rem, 2vw, 2rem);
 }
 
 .content-side.mobile {
@@ -23,7 +23,7 @@
 }
 
 .text-content {
-  max-width: 600px;
+  max-width: min(600px, 100%);
 }
 
 .text-card {
@@ -45,7 +45,8 @@
 .image-container {
   position: relative;
   width: 100%;
-  max-width: 400px;
+  max-width: min(400px, 90vw);
+  margin: 0 auto;
 }
 
 .image-background {
@@ -80,10 +81,10 @@
   }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1024px) {
   .contact-wrapper {
     flex-direction: column;
-    gap: 3rem;
+    gap: clamp(2rem, 3vw, 3rem);
   }
 
   .content-side {
@@ -109,7 +110,7 @@
   }
 
   h2.text-h2 {
-    font-size: 2.5rem !important;
+    font-size: clamp(1.75rem, 5vw, 2.5rem) !important;
   }
 }
 
@@ -123,7 +124,7 @@
   }
 
   .text-card p {
-    font-size: 1rem !important;
+    font-size: clamp(0.875rem, 3vw, 1rem) !important;
   }
 
   .contact-links {
@@ -142,11 +143,11 @@
   }
 
   .bottom-section h3 {
-    font-size: 1.75rem !important;
+    font-size: clamp(1.25rem, 4vw, 1.75rem) !important;
   }
 
   .bottom-section p {
-    font-size: 1rem !important;
+    font-size: clamp(0.875rem, 3vw, 1rem) !important;
   }
 }
 

@@ -1,11 +1,4 @@
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    padding: 1rem;
-    height: calc(100% - 80px);
-    overflow-y: auto;
-}
+
 
 .tech-grid {
     display: flex;
@@ -13,7 +6,7 @@
     gap: 8px;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1024px) {
     .skills-grid {
         grid-template-columns: repeat(2, 1fr);
     }

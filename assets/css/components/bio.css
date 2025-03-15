@@ -1,0 +1,166 @@
+.bio-section-wrapper {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 100vh;
+    position: relative;
+}
+
+.timeline-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.skills-side {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 1rem;
+    height: calc(100% - 80px);
+    overflow-y: auto;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #FF81C1 transparent;
+}
+
+.skill-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 129, 193, 0.2);
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(240, 139, 237, 0.15);
+}
+
+.skill-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.skill-tags {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* Timeline styles remain the same but remove max-width from bio-container */
+.bio-container {
+    max-height: 100vh;
+    padding: 2rem 0;
+    overflow: hidden;
+}
+
+.timeline-wrapper {
+    height: calc(100% - 80px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #FF81C1 transparent;
+    position: relative;
+}
+
+.timeline-wrapper::-webkit-scrollbar {
+    width: 4px;
+}
+
+.timeline-wrapper::-webkit-scrollbar-thumb {
+    background-color: #FF81C1;
+    border-radius: 2px;
+}
+
+.timeline-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.timeline-desktop {
+    padding: 0 1rem;
+    box-shadow: none;
+}
+
+.timeline-content {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 129, 193, 0.2);
+}
+
+.timeline-mobile {
+    padding: 0 0.5rem;
+}
+
+.mobile {
+    max-height: calc(100vh - 100px);
+}
+
+/* Updated responsive design */
+@media (max-width: 960px) {
+    .bio-section-wrapper {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 1rem;
+    }
+
+    .timeline-side,
+    .skills-side {
+        width: 100%;
+    }
+
+    .timeline-wrapper,
+    .skills-grid {
+        grid-template-columns: 1fr;
+        max-height: 60vh;
+    }
+}
+
+@media (max-width: 600px) {
+    .bio-section-wrapper {
+        padding: 0.5rem;
+        gap: 1rem;
+    }
+
+    .skill-card {
+        padding: 1rem;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+        max-height: 50vh;
+    }
+}
+
+/* Add scrollbar styling for skills grid */
+.skills-grid::-webkit-scrollbar {
+    width: 4px;
+}
+
+.skills-grid::-webkit-scrollbar-thumb {
+    background-color: #FF81C1;
+    border-radius: 2px;
+}
+
+.skills-grid::-webkit-scrollbar-track {
+    background: transparent;
+}

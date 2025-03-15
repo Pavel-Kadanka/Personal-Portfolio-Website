@@ -62,10 +62,8 @@ export default {
 }
 </script>
 <style scoped>
-@import url(assets/css/styles.css);
-
 .hover {
-    transition: 1s;
+    transition: 0.3s;
     /* Ensure the transition property applies to the transform */
 }
 

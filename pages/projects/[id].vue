@@ -4,15 +4,21 @@
     </v-container>
     <v-container v-else class="project-detail">
         <!-- Back button -->
-        <v-btn
-            @click="goBack"
-            icon="mdi-arrow-left"
-            variant="text"
-            color="#FF81C1"
-            class="mb-6 back-button"
-        >
-            Back to Projects
-        </v-btn>
+        <v-row>
+            <v-col cols="12" class="pa-0">
+                <v-btn
+                    @click="goBack"
+                    variant="outlined"
+                    :color="isHovering ? 'white' : '#FF81C1'"
+                    class="my-6 back-button"
+                    @mouseenter="isHovering = true"
+                    @mouseleave="isHovering = false"
+                    :style="{ backgroundColor: isHovering ? '#FF81C1' : 'transparent' }"
+                >
+                    Back to Projects
+                </v-btn>
+            </v-col>
+        </v-row>
 
         <!-- Project Header -->
         <v-row class="header-section">
@@ -37,7 +43,7 @@
         <!-- Project Content -->
         <v-row class="content-section">
             <!-- Images Section -->
-            <v-col cols="12" md="8" class="image-section">
+            <v-col cols="12" lg="8" class="image-section">
                 <v-carousel
                     v-if="images.length"
                     v-model="currentImage"
@@ -85,7 +91,7 @@
             </v-col>
 
             <!-- Project Description -->
-            <v-col cols="12" md="4" class="description-section">
+            <v-col cols="12" lg="4" class="description-section">
                 <v-card class="description-card animate-description" variant="outlined">
                     <v-card-title class="text-h5 font-weight-medium">
                         About Project
@@ -162,6 +168,7 @@ export default {
         const x = ref(false); // Ref for controlling dialog visibility
         const selectedImage = ref(null); // Ref to store the selected image
         const currentImage = ref(0); // Move this to setup
+        const isHovering = ref(false);
 
         // Fetch projects and their images
         onMounted(async () => {
@@ -232,13 +239,15 @@ export default {
             xs,
             lg,
             xl,
-            currentImage
+            currentImage,
+            isHovering
         };
     },
     data() {
         return {
             isMobile: false,
             isLoading: true,
+            isHovering: false,
         };
     },
     methods: {

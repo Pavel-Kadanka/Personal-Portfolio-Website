@@ -1,0 +1,173 @@
+.hero-section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 4rem;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 600px;
+}
+
+.hero-image {
+    flex: 1;
+    max-width: 350px;
+    padding: 2rem;
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(1px 1px 20px var(--primary-color));
+}
+
+.animate-image {
+    animation: fadeInRight 0.8s ease forwards 1.2s;
+}
+
+@keyframes fadeInRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.mobile-hero {
+    text-align: center;
+    padding: 0 20px;
+}
+
+.gradient-text {
+    background: linear-gradient(45deg, #f08bedfa, #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.animate-text {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.animate-text-delay {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards 0.3s;
+}
+
+.animate-text-delay-2 {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards 0.6s;
+}
+
+.animate-button {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards 0.9s;
+    transition: filter 0.3s ease-in-out, color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.animate-button:hover {
+    color: var(--text-color);
+    filter: brightness(1.1);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Keep your existing fade-in-section styles */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20vh);
+    visibility: hidden;
+    transition: opacity 0.6s ease-out, transform 1.2s ease-out;
+    will-change: opacity, visibility;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+}
+
+@media (max-width: 1440px) {
+    
+    .hero-image {
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero-section {
+        padding: 0 5vw;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .hero-content-wrapper {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+        padding: 100px 0;
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    .hero-image {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-content h1 {
+        font-size: 2rem !important;
+    }
+
+    .hero-content h2 {
+        font-size: 1.5rem !important;
+    }
+
+    .hero-content p {
+        font-size: 1rem !important;
+    }
+
+    .hero-image {
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 360px) {
+    .hero-content h1 {
+        font-size: 1.75rem !important;
+    }
+
+    .hero-content h2 {
+        font-size: 1.25rem !important;
+    }
+
+    .hero-image {
+        max-width: 200px;
+    }
+}
