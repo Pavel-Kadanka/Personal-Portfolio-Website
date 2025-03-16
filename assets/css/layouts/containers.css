@@ -26,6 +26,13 @@
 
 }
 
+.section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 @media (max-width: 960px) {
     .bio-section-wrapper {
         height: auto;

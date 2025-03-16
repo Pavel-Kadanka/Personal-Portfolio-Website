@@ -8,8 +8,7 @@
         <!-- Navigation -->
         <nav class="navigation" :class="{ 'nav-scrolled': hasScrolled }">
             <div class="nav-content">
-                <span class="logo gradient-text">Pavel</span>
-
+                <a href="/"><span class="logo gradient-text">Pavel</span></a>
                 <!-- Desktop Navigation -->
                 <div class="nav-links" v-if="!isMobile">
                     <a v-for="(section, index) in sections" 
@@ -102,16 +101,8 @@
 
 <script>
 import { useDisplay } from "vuetify";
-import Bio from '@/components/Bio.vue';
-import ProjectsComponent from '@/components/ProjectsComponent.vue';
-import Cooperate from '@/components/Cooperate.vue';
 
 export default {
-    components: {
-        Bio,
-        ProjectsComponent,
-        Cooperate
-    },
     setup() {
         const display = useDisplay();
         return {
@@ -198,8 +189,7 @@ export default {
     async mounted() {
         this.updateLayout();
         window.addEventListener("resize", this.updateLayout);
-        window.addEventListener('scroll', this.handleScroll);
-
+        window.addEventListener("scroll", this.handleScroll);
         this.loadAssets();
 
         this.$nextTick(() => {
@@ -208,6 +198,30 @@ export default {
         });
 
         this.handleScroll();
+
+        let address = window.location.hash;
+        if (address) {
+            let sectionId = address.substring(1); // Remove the "#" symbol
+            console.log(`Hash detected: ${sectionId}`);
+
+            // Wait for Vue to fully render components before trying to scroll
+            setTimeout(() => {
+                const element = document.getElementById(sectionId);
+                console.log('Element found:', element);
+                
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    console.warn("Element not found, retrying...");
+                    setTimeout(() => {
+                        const retryElement = document.getElementById(sectionId);
+                        if (retryElement) {
+                            retryElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }, 1000); // Second attempt after 1 second
+                }
+            }, 500); // Delay ensures components have rendered
+        }
     },
     beforeDestroy() {
         window.removeEventListener("resize", this.updateLayout);
@@ -220,120 +234,4 @@ export default {
 <style>
 @import url(assets/css/styles.css);
 
-.drawer {
-    color: #f08bedfa;
-}
-
-.drawer-items span {
-    color: white;
-}
-
-.landing-container {
-    background-color: rgb(15, 15, 17);
-    min-height: 100vh;
-}
-
-.navigation {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 1rem 17vw;
-    transition: all 0.3s ease;
-}
-
-.nav-scrolled {
-    background-color: rgba(15, 15, 17, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-}
-
-.nav-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-family: 'Joti One', sans-serif;
-    font-size: 1.5rem;
-}
-
-.nav-links {
-    display: flex;
-    gap: 2rem;
-}
-
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    transition: all 0.3s ease;
-}
-
-.nav-links a:hover, .nav-links a.active {
-    color: #f08bedfa;
-}
-
-.section {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-@media (max-width: 1440px) {
-    .navigation {
-        padding: 1rem 10vw;
-    }
-}
-
-@media (max-width: 960px) {
-    .navigation {
-        padding: 1rem 5vw;
-    }
-}
-
-/* Navigation Drawer Styles */
-.v-navigation-drawer {
-    background-color: rgb(15, 15, 17) !important;
-}
-
-.drawer-list {
-    background-color: rgb(15, 15, 17) !important;
-    color: white !important;
-}
-
-.drawer-items {
-    color: white !important;
-    transition: all 0.3s ease;
-}
-
-.drawer-items:hover {
-    background-color: rgba(240, 139, 237, 0.1) !important;
-}
-
-.drawer-items span {
-    color: white !important;
-}
-
-/* Optional: Style the scrim (overlay) when drawer is open */
-.v-overlay__scrim {
-    background-color: rgba(0, 0, 0, 0.5) !important;
-}
-
-/* Navigation Drawer Styles */
-.drawer-header {
-    padding: 16px !important;
-}
-
-.drawer-header .v-btn {
-    margin-right: -8px;
-}
-
-.v-divider {
-    border-color: rgba(255, 255, 255, 0.12) !important;
-}
 </style>
