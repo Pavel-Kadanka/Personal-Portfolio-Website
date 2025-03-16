@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
 
         // Query the 'project_skills' table for the specific project_id
         const [rows] = await connection.execute(
-            'SELECT vue, nuxt, javascript, php, laravel, python, html, css, tailwind, typescript FROM project_skills WHERE project_id = ?',
+            'SELECT vue, nuxt, javascript, php, laravel, python, html, css, tailwind, typescript, scss FROM project_skills WHERE project_id = ?',
             [project_id]
         );
 
@@ -34,6 +34,7 @@ export default defineEventHandler(async (event) => {
             { name: 'Vue.js', percentage: skillRow.vue },
             { name: 'Nuxt', percentage: skillRow.nuxt },
             { name: 'Python', percentage: skillRow.python },
+            { name: 'SCSS', percentage: skillRow.scss },
         ].filter(skill => skill.percentage !== null); // Filter out null values
 
         // Return the array of skills as JSON

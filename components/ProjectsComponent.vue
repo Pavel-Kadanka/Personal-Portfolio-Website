@@ -20,7 +20,7 @@
               v-if="projectImages[project.id]?.length"
               height="300"
               hide-delimiters
-              :show-arrows="hoveredProject === project.id"
+              :show-arrows="false"
               class="project-carousel"
             >
               <v-carousel-item
@@ -92,8 +92,6 @@ const loading = ref(true);
 const hoveredProject = ref(null);
 
 const truncateText = (text, maxLength) => {
-  console.log('Input text:', text);
-  console.log('Text length:', text?.length);
 
   if (!text) return '';
   if (text.length <= maxLength) return text;
@@ -111,7 +109,6 @@ const truncateText = (text, maxLength) => {
 const fetchProjects = async () => {
   try {
     const { data: fetchedProjects } = await useFetch('/api/projects');
-    console.log('Fetched projects:', fetchedProjects.value);
     
     if (fetchedProjects.value) {
       projects.value = fetchedProjects.value.map(project => ({

@@ -3,29 +3,47 @@
         <Loading />
     </v-container>
     <v-container v-else class="project-detail">
-        <!-- Back button -->
-        <v-row>
-            <v-col cols="12" class="px-4">
-                <v-btn
-                    @click="goBack"
-                    variant="outlined"
-                    :color="isHovering ? 'white' : '#FF81C1'"
-                    class="my-6 back-button"
-                    @mouseenter="isHovering = true"
-                    @mouseleave="isHovering = false"
-                    :style="{ backgroundColor: isHovering ? '#FF81C1' : 'transparent' }"
-                >
-                    Back to Projects
-                </v-btn>
-            </v-col>
-        </v-row>
+        <!-- Navigation Row -->
 
-        <!-- Project Header -->
+
         <v-row class="header-section">
-            <v-col cols="12">
-                <h1 class="text-h2 font-weight-bold gradient-text animate-title">
+            <!-- Title -->
+            <v-col cols="10" md="8">
+                <h1 class="text-h2 font-weight-bold gradient-text animate-title text-md-h2 text-sm-h3 text-xs-h5">
                     {{ post !== null ? projects[post].title : 'Loading...' }}
                 </h1>
+            </v-col>
+        
+            <!-- Back Button -->
+            <v-col cols="2" md="4" class="d-flex justify-end">
+                <v-btn
+                    v-if="$vuetify.display.xs"
+                    href="/"
+                    variant="tonal"
+                    class="navigation-btn back-btn fab-back"
+                    icon
+                >
+                    <v-icon>mdi-arrow-left</v-icon>
+                </v-btn>
+
+                <!-- Standard Button on MD+ -->
+                <v-btn
+                    v-else
+                    href="/"
+                    variant="tonal"
+                    class="navigation-btn"
+                    :class="{ 'btn-hover': isHoveringBack }"
+                    @mouseenter="isHoveringBack = true"
+                    @mouseleave="isHoveringBack = false"
+                >
+                    <v-icon start>mdi-arrow-left</v-icon>
+                    <span>Back</span>
+                </v-btn>
+            
+            </v-col>
+        
+            <!-- Skills -->
+            <v-col cols="12" md="8" class="d-flex justify-start">
                 <v-chip-group class="mt-4 animate-chips">
                     <v-chip
                         v-for="skill in project_skills"
@@ -38,7 +56,37 @@
                     </v-chip>
                 </v-chip-group>
             </v-col>
+        
+            <!-- Navigation Buttons -->
+            <v-col cols="12" md="4" class="d-flex justify-md-end justify-center gap-2 flex-column flex-md-row">
+                <v-btn
+                    :disabled="!hasPreviousProject"
+                    @click="navigateProject('prev')"
+                    variant="tonal"
+                    class="navigation-btn prev-btn w-100 w-md-auto"
+                    :class="{ 'btn-hover': isHoveringPrev }"
+                    @mouseenter="isHoveringPrev = true"
+                    @mouseleave="isHoveringPrev = false"
+                >
+                    <v-icon start>mdi-chevron-left</v-icon>
+                    <span>Previous</span>
+                </v-btn>
+        
+                <v-btn
+                    :disabled="!hasNextProject"
+                    @click="navigateProject('next')"
+                    variant="tonal"
+                    class="navigation-btn next-btn w-100 w-md-auto"
+                    :class="{ 'btn-hover': isHoveringNext }"
+                    @mouseenter="isHoveringNext = true"
+                    @mouseleave="isHoveringNext = false"
+                >
+                    <span>Next</span>
+                    <v-icon end>mdi-chevron-right</v-icon>
+                </v-btn>
+            </v-col>
         </v-row>
+        
 
         <!-- Project Content -->
         <v-row class="content-section">
@@ -50,6 +98,7 @@
                     height="500"
                     hide-delimiters
                     class="project-carousel animate-carousel"
+                    show-arrows="hover"
                 >
                     <v-carousel-item
                         v-for="(image, index) in images"
@@ -117,6 +166,35 @@
                             </v-chip>
                         </div>
                     </v-card-text>
+
+                    <!-- Add this new section for links -->
+                    <v-card-text v-if="projects[post]?.website_url || projects[post]?.github_url">
+                        <h3 class="text-h6 mb-4">Project Links</h3>
+                        <div class="links-container">
+                            <v-btn
+                                v-if="projects[post]?.website_url"
+                                :href="projects[post].website_url"
+                                target="_blank"
+                                prepend-icon="mdi-web"
+                                color="#FF81C1"
+                                variant="outlined"
+                                class="mb-2 project-link-btn"
+                            >
+                                Visit Website
+                            </v-btn>
+                            <v-btn
+                                v-if="projects[post]?.github_url"
+                                :href="projects[post].github_url"
+                                target="_blank"
+                                prepend-icon="mdi-github"
+                                color="#FF81C1"
+                                variant="outlined"
+                                class="project-link-btn"
+                            >
+                                View on GitHub
+                            </v-btn>
+                        </div>
+                    </v-card-text>
                 </v-card>
             </v-col>
         </v-row>
@@ -169,6 +247,9 @@ export default {
         const selectedImage = ref(null); // Ref to store the selected image
         const currentImage = ref(0); // Move this to setup
         const isHovering = ref(false);
+        const isHoveringBack = ref(false);
+        const isHoveringPrev = ref(false);
+        const isHoveringNext = ref(false);
 
         // Fetch projects and their images
         onMounted(async () => {
@@ -225,6 +306,26 @@ export default {
             window.history.back();
         };
 
+        const hasNextProject = computed(() => {
+            return post.value !== null && post.value < projects.value.length - 1;
+        });
+
+        const hasPreviousProject = computed(() => {
+            return post.value !== null && post.value > 0;
+        });
+
+        const navigateProject = (direction) => {
+            if (post.value === null) return;
+            
+            const newIndex = direction === 'next' 
+                ? post.value + 1 
+                : post.value - 1;
+            
+            if (newIndex >= 0 && newIndex < projects.value.length) {
+                navigateTo(`/projects/${newIndex + 1}`);
+            }
+        };
+
         return {
             post,
             x,
@@ -240,7 +341,13 @@ export default {
             lg,
             xl,
             currentImage,
-            isHovering
+            isHovering,
+            isHoveringBack,
+            isHoveringPrev,
+            isHoveringNext,
+            hasNextProject,
+            hasPreviousProject,
+            navigateProject,
         };
     },
     data() {
@@ -313,31 +420,45 @@ export default {
 .project-carousel {
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.project-carousel :deep(.v-carousel__controls) {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-carousel:hover :deep(.v-carousel__controls) {
+    opacity: 1;
 }
 
 .image-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .project-carousel:hover .image-overlay {
     opacity: 1;
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .zoom-btn {
     transform: scale(0.8);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    opacity: 0;
 }
 
 .project-carousel:hover .zoom-btn {
     transform: scale(1);
+    opacity: 1;
 }
 
 .image-preview-strip {
@@ -470,5 +591,55 @@ export default {
     .image-preview-strip {
         justify-content: center;
     }
+
+    .navigation-controls {
+        margin-bottom: 1rem;
+    }
+    
+    .navigation-btn {
+        font-size: 0.875rem;
+    }
+}
+
+.links-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.project-link-btn {
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.project-link-btn:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 129, 193, 0.1);
+}
+
+.navigation-controls {
+    margin-bottom: 2rem;
+    padding: 0.5rem;
+}
+
+.navigation-btn {
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 129, 193, 0.2);
+    color: #FF81C1;
+    background: transparent;
+}
+
+.navigation-btn.btn-hover {
+    background: #FF81C1;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 129, 193, 0.2);
+}
+
+.navigation-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 </style>
