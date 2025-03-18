@@ -34,6 +34,13 @@ export default defineEventHandler((event) => {
       '/projects/images/techpetal/image6.png',
       '/projects/images/techpetal/image7.png',
       '/projects/images/techpetal/image8.png',
+    ],
+    'grantpneu': [
+      '/projects/images/grantpneu/image1.png',
+      '/projects/images/grantpneu/image2.png',
+      '/projects/images/grantpneu/image3.png',
+      '/projects/images/grantpneu/image4.png',
+      '/projects/images/grantpneu/image5.png',
     ]
   };
 
