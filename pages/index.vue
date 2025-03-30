@@ -86,6 +86,10 @@
             <Bio />
         </section>
 
+        <section id="testimonials" class="section fade-in-section">
+            <Testemonials />
+        </section>
+
         <!-- Projects Section -->
         <section id="projects" class="section fade-in-section">
             <ProjectsComponent />
@@ -121,6 +125,7 @@ export default {
             sections: [
                 { id: 'home', name: 'Home' },
                 { id: 'about', name: 'About' },
+                { id: 'testimonials', name: 'Testimonials' },
                 { id: 'projects', name: 'Projects' },
                 { id: 'contact', name: 'Contact' }
             ]

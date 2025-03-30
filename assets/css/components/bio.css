@@ -36,13 +36,13 @@
     max-height: calc(100vh - 150px);
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: #FF81C1 transparent;
+    scrollbar-color: var(--primary-color) transparent;
 }
 
 .skill-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-color);
     border-radius: 12px;
-    border: 1px solid rgba(255, 129, 193, 0.2);
+    border: 1px solid var(--border-color);
     padding: 1.5rem;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -78,7 +78,7 @@
     height: calc(100% - 80px);
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: #FF81C1 transparent;
+    scrollbar-color: var(--primary-color) transparent;
     position: relative;
 }
 
@@ -87,7 +87,7 @@
 }
 
 .timeline-wrapper::-webkit-scrollbar-thumb {
-    background-color: #FF81C1;
+    background-color: var(--primary-color);
     border-radius: 2px;
 }
 
@@ -101,10 +101,10 @@
 }
 
 .timeline-content {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-color);
     padding: 0.75rem;
     border-radius: 8px;
-    border: 1px solid rgba(255, 129, 193, 0.2);
+    border: 1px solid var(--border-color);
 }
 
 .timeline-mobile {
@@ -157,7 +157,7 @@
 }
 
 .skills-grid::-webkit-scrollbar-thumb {
-    background-color: #FF81C1;
+    background-color: var(--primary-color);
     border-radius: 2px;
 }
 

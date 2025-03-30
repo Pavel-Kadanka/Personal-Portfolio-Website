@@ -4,6 +4,8 @@
   --background-color: rgb(15, 15, 17);
   --text-color: #ffffff;
   --text-color-muted: rgba(255, 255, 255, 0.7);
+  --card-color: #ffffff0d;
+  --button-color: rgba(255, 255, 255, 0.1);
   
   /* Gradients */
   --primary-gradient: linear-gradient(45deg, #FF81C1, #ffffff);
