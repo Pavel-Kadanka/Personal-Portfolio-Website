@@ -3,6 +3,7 @@
     <NuxtPage />
     <Footer />
   </NuxtLayout>
+  <script defer src="https://vercel.com/analytics/script.js"></script>
 </template>
 <script>
 import Footer from './components/Footer.vue';
