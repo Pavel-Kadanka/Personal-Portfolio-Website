@@ -85,6 +85,9 @@
         <section id="about" class="section fade-in-section">
             <Bio />
         </section>
+        <section>
+            <Skills />
+        </section>
 
         <section id="testimonials" class="section fade-in-section">
             <Testemonials />
