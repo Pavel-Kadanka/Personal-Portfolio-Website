@@ -7,6 +7,7 @@
         <v-timeline
           line-color="#FFFFFF"
           class="timeline-desktop"
+          v-if="!isMobile"
         >
           <v-timeline-item
             v-for="(item, i) in highlightedItems"
@@ -26,7 +27,22 @@
 
         <!-- Placeholder for mobile layout -->
         <div v-if="isMobile" class="timeline-mobile-placeholder text-center mt-4">
-          <p class="text-body-2">Swipe or scroll for timeline content.</p>
+          <v-card v-for="(item, i) in highlightedItems" 
+                  :key="i"
+                  variant="outlined"
+                  :color="item.color"
+                  class="mb-4">
+            <v-card-item>
+              <template v-slot:prepend>
+                <v-icon :icon="item.icon"></v-icon>
+              </template>
+              <v-card-title>{{ item.title }}</v-card-title>
+              <v-card-subtitle class="text-white">{{ item.date }}</v-card-subtitle>
+            </v-card-item>
+            <v-card-text class="text-body-2">
+              {{ item.text }}
+            </v-card-text>
+          </v-card>
         </div>
       </div>
     </div>

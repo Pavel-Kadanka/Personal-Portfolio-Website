@@ -3,7 +3,7 @@
 }
 
 .tech-chip {
-    color: white;
+    color: var(--text-color);
 }
 
 .project-card {
