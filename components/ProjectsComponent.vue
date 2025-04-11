@@ -8,6 +8,7 @@
              sm="6"
              lg="4"
              class="project-col">
+      <a :href="'/projects/' + project.id">
         <v-card
           class="project-card"
           :style="{ animationDelay: `${index * 0.2}s` }"
@@ -58,7 +59,7 @@
           </v-card-title>
 
           <v-card-text class="project-description pa-4 pt-0">
-            {{ truncateText(project.description || project.name || '', 150) }}
+            {{ truncateText(project.name , 110) }}
           </v-card-text>
 
           <v-divider></v-divider>
@@ -77,6 +78,7 @@
             </v-chip-group>
           </v-card-actions>
         </v-card>
+      </a>
       </v-col>
     </v-row>
   </v-container>
@@ -168,4 +170,8 @@ onMounted(() => {
 
 <style>
 @import '@/assets/css/components/projects.css';
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}	
 </style>
